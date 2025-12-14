@@ -7,6 +7,20 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<!-- Tetris Game Screen -->
+<div id="tetris-screen">
+  <div class="tetris-title">🎮 Mini-Spiel 🎮</div>
+  <div class="tetris-goal">Ziel: 10 Reihen clearen!</div>
+  <canvas id="tetris-canvas"></canvas>
+  <div class="tetris-score">Reihen: <span id="lines-cleared">0</span> / 10</div>
+  <div class="tetris-controls">
+    Swipe Links/Rechts • Tap zum Drehen • Swipe Runter zum Fallen
+  </div>
+  <button class="skip-btn" onclick="skipGame()">Ich kann nicht spielen - Skippen</button>
+</div>
+
+<!-- Wishlist Screen -->
 <div id="wishlist-screen" class="screen active">
   <div class="slider-container">
     <div class="slider-track">
