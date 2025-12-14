@@ -1,11 +1,7 @@
-const checkboxes = document.querySelectorAll("input[type='checkbox']");
+const gifts = document.querySelectorAll(".gift");
 
-// Lade gespeicherten Zustand
-checkboxes.forEach((box, index) => {
-  const saved = localStorage.getItem("wish_" + index);
-  if (saved === "true") box.checked = true;
-
-  box.addEventListener("change", () => {
-    localStorage.setItem("wish_" + index, box.checked);
+gifts.forEach(gift => {
+  gift.addEventListener("click", () => {
+    alert("Hier kommt später die Frage oder das Unlock-Game!");
   });
 });

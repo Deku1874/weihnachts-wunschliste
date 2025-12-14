@@ -1,63 +1,55 @@
-* {
-  box-sizing: border-box;
-}
-
+/* Body + Hintergrund */
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
-  background: linear-gradient(160deg, #0b1d26, #1d3557);
+  font-family: sans-serif;
+  background: url("assets/background.png") center / cover no-repeat;
   color: white;
 }
 
-.container {
-  max-width: 500px;
-  margin: auto;
-  padding: 20px;
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 5px;
-}
-
-.subtitle {
-  text-align: center;
-  opacity: 0.8;
-  margin-bottom: 20px;
-}
-
-#wishlist {
-  list-style: none;
-  padding: 0;
-}
-
-#wishlist li {
-  background: rgba(255,255,255,0.1);
-  margin-bottom: 12px;
-  padding: 15px;
-  border-radius: 12px;
-}
-
-label {
+/* Wunschliste Container */
+.wishlist-container {
   display: flex;
-  gap: 12px;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
   align-items: center;
+}
+
+/* Einzelnes Geschenk */
+.gift {
+  position: relative;
+  width: 80%;
+  max-width: 300px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.gift-img {
+  width: 100%;
+  border-radius: 12px;
+  filter: blur(5px); /* aktuell alles geblurred */
+  transition: filter 0.3s;
+}
+
+.gift-overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 2rem;
+  color: white;
+}
+
+.gift-name {
+  margin-top: 8px;
   font-size: 1.1rem;
+  color: white;
 }
 
-input[type="checkbox"] {
-  transform: scale(1.4);
+/* unlocked state */
+.gift.unlocked .gift-img {
+  filter: blur(0);
 }
 
-/* Abgehakt */
-input:checked + span {
-  text-decoration: line-through;
-  opacity: 0.6;
-}
-
-/* Desktop */
-@media (min-width: 768px) {
-  body {
-    font-size: 18px;
-  }
+.gift.unlocked .gift-overlay {
+  display: none;
 }
