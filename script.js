@@ -3,21 +3,74 @@ const gifts = document.querySelectorAll(".gift-box");
 const giftCount = gifts.length;
 let currentIndex = 0;
 
-// --- INITIALISIERUNG DES SEITENINDIKATORS ---
+const quizModal = document.getElementById("quizModal");
+const quizQuestion = document.getElementById("quizQuestion");
+const quizAnswers = document.getElementById("quizAnswers");
+const feedbackText = document.getElementById("feedbackText");
+
+const quizData = [
+  {
+    question: "Wann habe ich Geburtstag?",
+    correct: "14.02.2006",
+    wrong: ["25.12.1999", "01.04.2005", "31.10.2007"],
+    link: "https://www.zalando.de/nike-sportswear-air-force-1-07-sneaker-low-white-ni112n022-a11.html",
+    wrongTexts: ["Nope, so alt bin ich nicht! 😅", "Falsch! Ich bin kein Aprilscherz! 🤡", "Halloween? Versuch's nochmal! 🎃"]
+  },
+  {
+    question: "Was studiere ich?",
+    correct: "Interaktive Medien",
+    wrong: ["Raketenwissenschaft", "Unterwasser-Korbflechten", "Meme-ologie"],
+    link: "https://www.zalando.de/karl-kani-jeans-relaxed-fit-grey-kk122g04f-c11.html",
+    wrongTexts: ["Klingt cool, aber nein! 🚀", "Kreativ, aber leider falsch! 🧺", "Fast, aber nicht ganz! 😂"]
+  },
+  {
+    question: "Wie groß bin ich?",
+    correct: "Größer als Papa",
+    wrong: ["Kleiner als ein Gartenzwerg", "Genau 2 Meter", "Durchschnittlich"],
+    link: "https://www.zalando.de/karl-kani-tribal-baggy-five-pocket-jeans-relaxed-fit-bleached-blue-kk122g03r-k11.html",
+    wrongTexts: ["Haha, so klein bin ich nicht! 🧙", "Übertreib mal nicht! 🏀", "Nope, ich bin größer! 📏"]
+  },
+  {
+    question: "Wer ist mein Lieblings Musiker?",
+    correct: "T-low",
+    wrong: ["Helene Fischer", "Mozart", "Die Schlümpfe"],
+    link: "https://shirtz.cool/products/the-weaver-hoodie?variant=41144949211234",
+    wrongTexts: ["Atemlos? Eher nicht! 🎤", "Zu klassisch für mich! 🎻", "La la la... NEIN! 💙"]
+  },
+  {
+    question: "Was ist mein Lieblings Getränk?",
+    correct: "White Monster",
+    wrong: ["Warme Milch mit Honig", "Gurkenwasser", "Red Bull"],
+    link: "https://shirtz.cool/products/the-demon-hoodie",
+    wrongTexts: ["Klingt nach Einschlafhilfe! 🥛", "Bäh! Versuch's nochmal! 🥒", "Falsche Farbe, falscher Drink! 🔴"]
+  },
+  {
+    question: "Was ist mein Lieblings Story Spiel?",
+    correct: "Resident Evil",
+    wrong: ["Candy Crush", "Die Sims", "Minesweeper"],
+    link: "https://store.steampowered.com/app/3764200/Resident_Evil_Requiem/",
+    wrongTexts: ["Zu süß für mich! 🍬", "Nicht gruselig genug! 🏠", "Zu explosiv... warte, was? 💣"]
+  },
+  {
+    question: "Wo will ich gerne hinreisen?",
+    correct: "Japan",
+    wrong: ["Bielefeld", "Atlantis", "Zur Sonne"],
+    link: "https://www.amazon.de/Elgato-Studio-Controller-ausl%C3%B6sen-Software-20GBA9901-wt/dp/B09RMXK59C/",
+    wrongTexts: ["Das gibt's doch gar nicht! 🤔", "Zu nass für mich! 🌊", "Zu heiß! Ich mag Sushi mehr! 🍣"]
+  }
+];
+
+const unlockedGifts = new Array(giftCount).fill(false);
+
+// Page Indicator
 const pageIndicator = document.createElement("div");
 pageIndicator.id = "page-indicator";
 document.body.appendChild(pageIndicator);
 
-// --- HELPER FUNKTIONEN ---
-
 function showSlide(index) {
-  // Stellt sicher, dass der Index innerhalb der Grenzen bleibt
   currentIndex = Math.max(0, Math.min(index, giftCount - 1));
-  
-  // Verschiebe den Track um die volle Viewport-Breite (100vw) pro Geschenk
   const offset = -currentIndex * window.innerWidth;
   track.style.transform = `translateX(${offset}px)`;
-  
   updatePageIndicator(currentIndex);
 }
 
@@ -25,96 +78,8 @@ function updatePageIndicator(index) {
   pageIndicator.textContent = `${index + 1} / ${giftCount}`;
 }
 
-// --- QUIZ LOGIK ---
-
-const rudeFeedback = [
-    "Falsch! Bist du sicher, dass du mich kennst?",
-    "Haha, absolut daneben. Versuch's nochmal, das ist peinlich.",
-    "Blink, blink – falsch gedacht. Nächste Chance!",
-    "Der Link zu dieser Antwort ist 'Weiß ich nicht'.",
-    "Falsch. Frag doch lieber Tante Google, wenn du schon so rätselhaft bist."
-];
-
-function handleAnswer(event) {
-    const button = event.target;
-    const giftBox = button.closest('.gift-box');
-    const quizContainer = button.closest('.quiz-container');
-    const giftElement = giftBox.querySelector('.gift');
-    const feedbackText = giftBox.querySelector('.feedback-text');
-    
-    // Deaktiviere alle Buttons während der Verarbeitung
-    quizContainer.querySelectorAll('.answer-btn').forEach(btn => btn.disabled = true);
-    
-    // Entferne alte Klassen
-    button.classList.remove('incorrect');
-    feedbackText.textContent = '';
-    
-    const selectedAnswer = button.dataset.answer;
-    const correctAnswer = quizContainer.dataset.correctAnswer;
-
-    if (selectedAnswer === correctAnswer) {
-        // RICHTIGE ANTWORT
-        button.classList.add('correct');
-        feedbackText.textContent = "Korrekt! Das Geheimnis ist gelüftet!";
-        
-        // Geschenk freischalten
-        giftElement.classList.add('unlocked');
-        quizContainer.classList.add('solved');
-        
-        // Jetzt ist das Bild klickbar für den Link
-        giftElement.removeEventListener('click', showQuizIfLocked); // Entferne den alten Klick-Handler
-        giftElement.addEventListener('click', navigateToLink);
-        
-    } else {
-        // FALSCHE ANTWORT
-        button.classList.add('incorrect');
-        const randomFeedback = rudeFeedback[Math.floor(Math.random() * rudeFeedback.length)];
-        feedbackText.textContent = randomFeedback;
-        
-        // Nach der Animation Buttons wieder aktivieren
-        setTimeout(() => {
-            button.classList.remove('incorrect');
-            quizContainer.querySelectorAll('.answer-btn').forEach(btn => btn.disabled = false);
-        }, 1500); 
-    }
-}
-
-function showQuizIfLocked() {
-    // Dies ist der Handler, der ausgelöst wird, wenn man auf das GESPERRTE Bild klickt
-    const giftElement = this;
-    if (!giftElement.classList.contains('unlocked')) {
-        const quizContainer = giftElement.parentNode.querySelector('.quiz-container');
-        alert("Zuerst musst du die Frage beantworten, um das Geschenk zu sehen!");
-        // Optional: Hier könnte man das Quiz in den Fokus rücken oder scrollen
-    }
-}
-
-function navigateToLink() {
-    // Dies ist der Handler, der ausgelöst wird, wenn man auf das FREIGESCHALTETE Bild klickt
-    const giftElement = this;
-    const link = giftElement.dataset.link;
-    if (link) {
-        window.open(link, '_blank');
-    }
-}
-
-
-// --- EVENT LISTENER ZUWEISUNG ---
-
-// 1. Zuweisung der Quiz-Logik zu den Buttons
-document.querySelectorAll('.answer-btn').forEach(button => {
-    button.addEventListener('click', handleAnswer);
-});
-
-// 2. Klick auf gesperrtes Bild soll den Benutzer informieren
-document.querySelectorAll('.gift').forEach(gift => {
-    gift.addEventListener('click', showQuizIfLocked);
-});
-
-
-// 3. Swipe und Resize Logik (wie zuvor)
 window.addEventListener("resize", () => {
-    showSlide(currentIndex);
+  showSlide(currentIndex);
 });
 
 document.addEventListener("keydown", e => {
@@ -130,16 +95,16 @@ let startX = 0;
 let isSwiping = false;
 
 track.addEventListener("touchstart", e => {
-    startX = e.touches[0].clientX;
-    isSwiping = true;
+  startX = e.touches[0].clientX;
+  isSwiping = true;
 });
 
 track.addEventListener("touchend", e => {
   if (!isSwiping) return;
   const endX = e.changedTouches[0].clientX;
   const deltaX = endX - startX;
-  const swipeThreshold = 50; 
-
+  const swipeThreshold = 50;
+  
   if (deltaX < -swipeThreshold) {
     showSlide(currentIndex + 1);
   } else if (deltaX > swipeThreshold) {
@@ -148,5 +113,66 @@ track.addEventListener("touchend", e => {
   isSwiping = false;
 });
 
-// Start Slide
+function showQuiz(giftIndex) {
+  const quiz = quizData[giftIndex];
+  quizQuestion.textContent = quiz.question;
+  feedbackText.textContent = "";
+  
+  const allAnswers = [quiz.correct, ...quiz.wrong];
+  const shuffled = allAnswers.sort(() => Math.random() - 0.5);
+  
+  quizAnswers.innerHTML = "";
+  shuffled.forEach((answer, index) => {
+    const btn = document.createElement("button");
+    btn.className = "answer-btn";
+    btn.textContent = answer;
+    btn.onclick = () => checkAnswer(answer, quiz, giftIndex, btn);
+    quizAnswers.appendChild(btn);
+  });
+  
+  quizModal.classList.add("active");
+}
+
+function checkAnswer(selected, quiz, giftIndex, btn) {
+  if (selected === quiz.correct) {
+    btn.classList.add("correct");
+    feedbackText.textContent = "🎉 Richtig! Geschenk freigeschaltet!";
+    feedbackText.style.color = "#4CAF50";
+    
+    setTimeout(() => {
+      unlockGift(giftIndex);
+      quizModal.classList.remove("active");
+    }, 1500);
+  } else {
+    btn.classList.add("wrong");
+    const wrongIndex = quiz.wrong.indexOf(selected);
+    feedbackText.textContent = quiz.wrongTexts[wrongIndex];
+    feedbackText.style.color = "#ff4444";
+    
+    setTimeout(() => {
+      btn.classList.remove("wrong");
+      feedbackText.textContent = "";
+    }, 1500);
+  }
+}
+
+function unlockGift(giftIndex) {
+  unlockedGifts[giftIndex] = true;
+  const giftElement = gifts[giftIndex].querySelector(".gift");
+  giftElement.classList.add("unlocked");
+}
+
+gifts.forEach((giftBox, index) => {
+  const giftElement = giftBox.querySelector(".gift");
+  giftElement.addEventListener("click", (e) => {
+    e.stopPropagation();
+    
+    if (unlockedGifts[index]) {
+      window.open(quizData[index].link, "_blank");
+    } else {
+      showQuiz(index);
+    }
+  });
+});
+
 showSlide(currentIndex);
