@@ -17,20 +17,20 @@ function updatePageIndicator(index) {
   pageIndicator.textContent = `${index + 1} / ${gifts.length}`;
 }
 
-// Pfeiltasten
+// Pfeiltasten (nur innerhalb Bereich)
 document.addEventListener("keydown", e => {
-  if (e.key === "ArrowRight") currentIndex = Math.min(currentIndex + 1, gifts.length - 1);
-  if (e.key === "ArrowLeft") currentIndex = Math.max(currentIndex - 1, 0);
+  if (e.key === "ArrowRight" && currentIndex < gifts.length - 1) currentIndex++;
+  if (e.key === "ArrowLeft" && currentIndex > 0) currentIndex--;
   showSlide(currentIndex);
 });
 
-// Touch Swipe für mobile
+// Touch Swipe fürs Handy (nur innerhalb Bereich)
 let startX = 0;
 track.addEventListener("touchstart", e => startX = e.touches[0].clientX);
 track.addEventListener("touchend", e => {
   const endX = e.changedTouches[0].clientX;
-  if (endX < startX - 50) currentIndex = Math.min(currentIndex + 1, gifts.length - 1);
-  else if (endX > startX + 50) currentIndex = Math.max(currentIndex - 1, 0);
+  if (endX < startX - 50 && currentIndex < gifts.length - 1) currentIndex++;
+  else if (endX > startX + 50 && currentIndex > 0) currentIndex--;
   showSlide(currentIndex);
 });
 
@@ -41,5 +41,5 @@ gifts.forEach(gift => {
   });
 });
 
-// Initial Slide
+// Start Slide
 showSlide(currentIndex);

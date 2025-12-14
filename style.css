@@ -2,10 +2,10 @@
 body {
   margin: 0;
   font-family: sans-serif;
-  background: url("assets/background.png") center / cover no-repeat fixed; /* fixed für nicht scrollbaren BG */
+  background: url("assets/background.png") center / cover no-repeat fixed;
   color: white;
   height: 100vh;
-  overflow: hidden; /* kein Scrollen */
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,21 +17,21 @@ body {
   height: 80vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* Boxen leicht nach unten */
+  align-items: flex-start;
   padding-top: 50px;
-  overflow: hidden; /* nur 1 „Seite“ sichtbar */
+  overflow: hidden;
 }
 
 /* Track für Sliding */
 .slider-track {
   display: flex;
-  transition: transform 0.4s ease; /* Smooth Scroll */
+  transition: transform 0.4s ease;
   align-items: center;
 }
 
 /* Box für jedes Geschenk */
 .gift-box {
-  flex: 0 0 100%; /* 100% Breite pro Seite */
+  flex: 0 0 100%; /* genau eine Box pro Seite */
   max-width: 300px;
   height: 300px;
   margin: 0 auto;
