@@ -8,7 +8,7 @@ pageIndicator.id = "page-indicator";
 document.body.appendChild(pageIndicator);
 
 function showSlide(index) {
-  const offset = -index * window.innerWidth; // Snap pro Bildschirmbreite
+  const offset = -index * window.innerWidth;
   track.style.transform = `translateX(${offset}px)`;
   updatePageIndicator(index);
 }
@@ -24,13 +24,13 @@ document.addEventListener("keydown", e => {
   showSlide(currentIndex);
 });
 
-// Touch Swipe fürs Handy
+// Touch Swipe für mobile
 let startX = 0;
 track.addEventListener("touchstart", e => startX = e.touches[0].clientX);
 track.addEventListener("touchend", e => {
   const endX = e.changedTouches[0].clientX;
-  if (endX < startX - 30) currentIndex = Math.min(currentIndex + 1, gifts.length - 1);
-  else if (endX > startX + 30) currentIndex = Math.max(currentIndex - 1, 0);
+  if (endX < startX - 50) currentIndex = Math.min(currentIndex + 1, gifts.length - 1);
+  else if (endX > startX + 50) currentIndex = Math.max(currentIndex - 1, 0);
   showSlide(currentIndex);
 });
 
@@ -41,5 +41,5 @@ gifts.forEach(gift => {
   });
 });
 
-// Start Slide
+// Initial Slide
 showSlide(currentIndex);

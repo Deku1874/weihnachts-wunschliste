@@ -2,7 +2,7 @@
 body {
   margin: 0;
   font-family: sans-serif;
-  background: url("assets/background.png") center / cover no-repeat;
+  background: url("assets/background.png") center / cover no-repeat fixed; /* fixed für nicht scrollbaren BG */
   color: white;
   height: 100vh;
   overflow: hidden; /* kein Scrollen */
@@ -18,7 +18,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start; /* Boxen leicht nach unten */
-  padding-top: 50px; /* Abstand von oben */
+  padding-top: 50px;
   overflow: hidden; /* nur 1 „Seite“ sichtbar */
 }
 
@@ -52,7 +52,7 @@ body {
   height: 100%;
   object-fit: contain;
   border-radius: 12px;
-  filter: blur(5px); /* locked state */
+  filter: blur(5px);
   transition: filter 0.3s;
 }
 
