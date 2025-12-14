@@ -14,49 +14,49 @@ const quizData = [
     correct: "14.02.2006",
     wrong: ["25.12.1999", "01.04.2005", "31.10.2007"],
     link: "https://www.zalando.de/nike-sportswear-air-force-1-07-sneaker-low-white-ni112n022-a11.html",
-    wrongTexts: ["Nope, so alt bin ich nicht! 😅", "Falsch! Ich bin kein Aprilscherz! 🤡", "Halloween? Versuch's nochmal! 🎃"]
+    wrongTexts: ["Nope, so alt bin ich nicht!", "Falsch! Ich bin kein Aprilscherz!", "Halloween? Versuch's nochmal!"]
   },
   {
     question: "Was studiere ich?",
     correct: "Interaktive Medien",
-    wrong: ["Raketenwissenschaft", "Unterwasser-Korbflechten", "Meme-ologie"],
+    wrong: ["Raketenwissenschaft", "Kunst🤡", "Meme-ologie"],
     link: "https://www.zalando.de/karl-kani-jeans-relaxed-fit-grey-kk122g04f-c11.html",
-    wrongTexts: ["Klingt cool, aber nein! 🚀", "Kreativ, aber leider falsch! 🧺", "Fast, aber nicht ganz! 😂"]
+    wrongTexts: ["Klingt cool, aber nein!", "Kreativ, aber leider falsch!", "Fast, aber nicht ganz!"]
   },
   {
     question: "Wie groß bin ich?",
     correct: "Größer als Papa",
-    wrong: ["Kleiner als ein Gartenzwerg", "Genau 2 Meter", "Durchschnittlich"],
+    wrong: ["Groß", "Genau 2 Meter", "Durchschnittlich"],
     link: "https://www.zalando.de/karl-kani-tribal-baggy-five-pocket-jeans-relaxed-fit-bleached-blue-kk122g03r-k11.html",
-    wrongTexts: ["Haha, so klein bin ich nicht! 🧙", "Übertreib mal nicht! 🏀", "Nope, ich bin größer! 📏"]
+    wrongTexts: ["Hahahaha, fast!", "Übertreib mal nicht!", "Nope!"]
   },
   {
     question: "Wer ist mein Lieblings Musiker?",
     correct: "T-low",
-    wrong: ["Helene Fischer", "Mozart", "Die Schlümpfe"],
+    wrong: ["Helene Fischer", "Lil Peep", "XXXTentacion"],
     link: "https://shirtz.cool/products/the-weaver-hoodie?variant=41144949211234",
-    wrongTexts: ["Atemlos? Eher nicht! 🎤", "Zu klassisch für mich! 🎻", "La la la... NEIN! 💙"]
+    wrongTexts: ["Atemlos?", "Nur in der Top 4!", "Fast!"]
   },
   {
     question: "Was ist mein Lieblings Getränk?",
     correct: "White Monster",
-    wrong: ["Warme Milch mit Honig", "Gurkenwasser", "Red Bull"],
+    wrong: ["Vodka mit Pfeffer", "Gurkenwasser", "Red Bull"],
     link: "https://shirtz.cool/products/the-demon-hoodie",
-    wrongTexts: ["Klingt nach Einschlafhilfe! 🥛", "Bäh! Versuch's nochmal! 🥒", "Falsche Farbe, falscher Drink! 🔴"]
+    wrongTexts: ["Nur wenn ich krank bin!", "Bäh!Ich bin nicht Papa!", "Energy für Verlierer!"]
   },
   {
     question: "Was ist mein Lieblings Story Spiel?",
     correct: "Resident Evil",
-    wrong: ["Candy Crush", "Die Sims", "Minesweeper"],
+    wrong: ["Counter-Strike 2", "Minecraft", "RDR2"],
     link: "https://store.steampowered.com/app/3764200/Resident_Evil_Requiem/",
-    wrongTexts: ["Zu süß für mich! 🍬", "Nicht gruselig genug! 🏠", "Zu explosiv... warte, was? 💣"]
+    wrongTexts: ["Ist doch nur ein Online Shooter?", "Immer gut zum spielen, aber nein!", "Andi, hast du mich mit Tim verwechselt?"]
   },
   {
     question: "Wo will ich gerne hinreisen?",
     correct: "Japan",
-    wrong: ["Bielefeld", "Atlantis", "Zur Sonne"],
+    wrong: ["Bielefeld", "Bulgarien", "Nord Korea"],
     link: "https://www.amazon.de/Elgato-Studio-Controller-ausl%C3%B6sen-Software-20GBA9901-wt/dp/B09RMXK59C/",
-    wrongTexts: ["Das gibt's doch gar nicht! 🤔", "Zu nass für mich! 🌊", "Zu heiß! Ich mag Sushi mehr! 🍣"]
+    wrongTexts: ["Das gibt's doch gar nicht!", "Erst zu einer Hochzeit!", "Komme ich dann überhaupt wieder zurück?"]
   }
 ];
 
@@ -136,7 +136,7 @@ function showQuiz(giftIndex) {
 function checkAnswer(selected, quiz, giftIndex, btn) {
   if (selected === quiz.correct) {
     btn.classList.add("correct");
-    feedbackText.textContent = "🎉 Richtig! Geschenk freigeschaltet!";
+    feedbackText.textContent = "Richtig! Geschenk freigeschaltet!";
     feedbackText.style.color = "#4CAF50";
     
     setTimeout(() => {
