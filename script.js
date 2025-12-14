@@ -8,7 +8,7 @@ pageIndicator.id = "page-indicator";
 document.body.appendChild(pageIndicator);
 
 function showSlide(index) {
-  const offset = -index * window.innerWidth;
+  const offset = -index * window.innerWidth; // Snap auf volle Breite
   track.style.transform = `translateX(${offset}px)`;
   updatePageIndicator(index);
 }
@@ -17,21 +17,30 @@ function updatePageIndicator(index) {
   pageIndicator.textContent = `${index + 1} / ${gifts.length}`;
 }
 
-// Pfeiltasten (nur innerhalb Bereich)
+// Pfeiltasten (nur innerhalb gültiger Bereich)
 document.addEventListener("keydown", e => {
-  if (e.key === "ArrowRight" && currentIndex < gifts.length - 1) currentIndex++;
-  if (e.key === "ArrowLeft" && currentIndex > 0) currentIndex--;
-  showSlide(currentIndex);
+  if (e.key === "ArrowRight" && currentIndex < gifts.length - 1) {
+    currentIndex++;
+    showSlide(currentIndex);
+  }
+  if (e.key === "ArrowLeft" && currentIndex > 0) {
+    currentIndex--;
+    showSlide(currentIndex);
+  }
 });
 
-// Touch Swipe fürs Handy (nur innerhalb Bereich)
+// Touch Swipe fürs Handy (nur innerhalb gültiger Bereich)
 let startX = 0;
 track.addEventListener("touchstart", e => startX = e.touches[0].clientX);
 track.addEventListener("touchend", e => {
   const endX = e.changedTouches[0].clientX;
-  if (endX < startX - 50 && currentIndex < gifts.length - 1) currentIndex++;
-  else if (endX > startX + 50 && currentIndex > 0) currentIndex--;
-  showSlide(currentIndex);
+  if (endX < startX - 50 && currentIndex < gifts.length - 1) {
+    currentIndex++;
+    showSlide(currentIndex);
+  } else if (endX > startX + 50 && currentIndex > 0) {
+    currentIndex--;
+    showSlide(currentIndex);
+  }
 });
 
 // Klick Event (Unlock / Frage)
