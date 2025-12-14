@@ -378,7 +378,7 @@ function showQuiz(giftIndex) {
 function checkAnswer(selected, quiz, giftIndex, btn) {
   if (selected === quiz.correct) {
     btn.classList.add("correct");
-    feedbackText.textContent = "🎉 Richtig! Geschenk freigeschaltet!";
+    feedbackText.textContent = "Richtig! Geschenk freigeschaltet!";
     feedbackText.style.color = "#4CAF50";
     
     setTimeout(() => {
