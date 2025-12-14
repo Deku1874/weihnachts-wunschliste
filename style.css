@@ -2,10 +2,11 @@
 body {
   margin: 0;
   font-family: sans-serif;
+  /* 'fixed' sorgt dafür, dass sich das Bild nicht bewegt */
   background: url("assets/background.png") center / cover no-repeat fixed;
   color: white;
   height: 100vh;
-  overflow: hidden;
+  overflow: hidden; /* Verhindert ungewolltes Scrollen */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,56 +14,63 @@ body {
 
 /* Slider Container */
 .slider-container {
-  width: 100%;
+  /* Nutzt die gesamte Breite/Höhe des Viewports */
+  width: 100vw; 
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center; /* vertikal zentriert */
-  overflow: hidden;
+  overflow: hidden; /* Wichtig: Versteckt die nicht sichtbaren Geschenke */
 }
 
 /* Track für Sliding */
 .slider-track {
   display: flex;
   transition: transform 0.4s ease;
+  height: 100%; /* Wichtig für die vertikale Zentrierung */
   align-items: center;
 }
 
 /* Box für jedes Geschenk */
 .gift-box {
-  flex: 0 0 100%;
+  /* Jede Box nimmt genau die Breite des Viewports ein */
+  flex: 0 0 100vw; 
+  height: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; /* Zentriert die .gift Box horizontal */
+  align-items: center; /* Zentriert die .gift Box vertikal */
 }
 
-/* Gift innerhalb der Box */
+/* Gift innerhalb der Box (Die eigentliche visuelle Box für das Geschenk) */
 .gift {
-  width: 300px;    /* kleinere Box */
+  width: 300px;    
   height: 300px;
+  max-width: 80vw; /* Hilfreich auf sehr kleinen Bildschirmen */
+  max-height: 80vw;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  border: 2px solid white; /* Outline optional */
+  border: 2px solid white; 
   border-radius: 12px;
-  overflow: hidden; /* Bild bleibt in der Box */
+  overflow: hidden; /* Wichtig: Bild wird innerhalb der Box beschnitten */
 }
 
 .gift-img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Bild füllt Box komplett */
+  /* Stellt sicher, dass das Bild die Box füllt und beschnitten wird */
+  object-fit: cover; 
   transition: filter 0.3s;
   filter: blur(5px); /* locked state */
 }
 
 .gift-overlay {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 2rem;
+  /* Zentriere das Overlay in der Mitte des .gift-Elements */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem; 
   color: white;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
 }
 
 .gift.unlocked .gift-img {
@@ -80,4 +88,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   font-size: 1.2rem;
+  padding: 5px 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
 }
