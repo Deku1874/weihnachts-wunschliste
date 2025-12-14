@@ -17,7 +17,7 @@ function updatePageIndicator(index) {
   pageIndicator.textContent = `${index + 1} / ${gifts.length}`;
 }
 
-// Pfeiltasten (nur innerhalb gültiger Bereich)
+// Pfeiltasten (nur innerhalb Bereich)
 document.addEventListener("keydown", e => {
   if (e.key === "ArrowRight" && currentIndex < gifts.length - 1) {
     currentIndex++;
@@ -29,7 +29,7 @@ document.addEventListener("keydown", e => {
   }
 });
 
-// Touch Swipe fürs Handy (nur innerhalb gültiger Bereich)
+// Touch Swipe fürs Handy (nur innerhalb Bereich)
 let startX = 0;
 track.addEventListener("touchstart", e => startX = e.touches[0].clientX);
 track.addEventListener("touchend", e => {
