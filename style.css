@@ -2,11 +2,10 @@
 body {
   margin: 0;
   font-family: sans-serif;
-  /* 'fixed' sorgt dafür, dass sich das Bild nicht bewegt */
   background: url("assets/background.png") center / cover no-repeat fixed;
   color: white;
   height: 100vh;
-  overflow: hidden; /* Verhindert ungewolltes Scrollen */
+  overflow: hidden; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,35 +13,37 @@ body {
 
 /* Slider Container */
 .slider-container {
-  /* Nutzt die gesamte Breite/Höhe des Viewports */
   width: 100vw; 
   height: 100vh;
-  overflow: hidden; /* Wichtig: Versteckt die nicht sichtbaren Geschenke */
+  overflow: hidden; 
 }
 
 /* Track für Sliding */
 .slider-track {
   display: flex;
   transition: transform 0.4s ease;
-  height: 100%; /* Wichtig für die vertikale Zentrierung */
+  height: 100%; 
   align-items: center;
 }
 
 /* Box für jedes Geschenk */
 .gift-box {
-  /* Jede Box nimmt genau die Breite des Viewports ein */
   flex: 0 0 100vw; 
   height: 100%;
   display: flex;
-  justify-content: center; /* Zentriert die .gift Box horizontal */
-  align-items: center; /* Zentriert die .gift Box vertikal */
+  flex-direction: column; /* Organisiert Geschenk und Quiz vertikal */
+  justify-content: center;
+  align-items: center; 
+  gap: 20px; /* Abstand zwischen Geschenk und Quiz */
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-/* Gift innerhalb der Box (Die eigentliche visuelle Box für das Geschenk) */
+/* Gift innerhalb der Box */
 .gift {
   width: 300px;    
   height: 300px;
-  max-width: 80vw; /* Hilfreich auf sehr kleinen Bildschirmen */
+  max-width: 80vw; 
   max-height: 80vw;
   display: flex;
   justify-content: center;
@@ -50,13 +51,13 @@ body {
   position: relative;
   border: 2px solid white; 
   border-radius: 12px;
-  overflow: hidden; /* Wichtig: Bild wird innerhalb der Box beschnitten */
+  overflow: hidden; 
+  cursor: pointer; /* Damit es aussieht, als wäre es klickbar */
 }
 
 .gift-img {
   width: 100%;
   height: 100%;
-  /* Stellt sicher, dass das Bild die Box füllt und beschnitten wird */
   object-fit: cover; 
   transition: filter 0.3s;
   filter: blur(5px); /* locked state */
@@ -64,7 +65,6 @@ body {
 
 .gift-overlay {
   position: absolute;
-  /* Zentriere das Overlay in der Mitte des .gift-Elements */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -73,12 +73,94 @@ body {
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
 }
 
+/* UNLOCKED STATE */
 .gift.unlocked .gift-img {
   filter: blur(0);
 }
 
 .gift.unlocked .gift-overlay {
   display: none;
+}
+
+/* HINWEIS-TEXT */
+.hint-text {
+  font-size: 0.9rem;
+  padding: 5px 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  margin-top: -10px; /* Etwas näher ans Geschenk */
+}
+
+/* QUIZ-STILE */
+.quiz-container {
+  max-width: 90vw;
+  width: 400px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  display: block; /* Standardmäßig sichtbar */
+}
+
+.quiz-container.solved {
+    display: none; /* Verstecke das Quiz, wenn es gelöst ist */
+}
+
+.question {
+  font-size: 1.1rem;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.answers {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.answer-btn {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.answer-btn:hover:not(.incorrect):not(.correct) {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.answer-btn:active {
+    transform: scale(0.98);
+}
+
+/* FEEDBACK-TEXT */
+.feedback-text {
+    margin-top: 10px;
+    height: 1.2rem; /* Platz freihalten, um Springen zu vermeiden */
+    font-style: italic;
+    color: #ffcccc;
+}
+
+/* Falsche Antwort: Rotes Blinken */
+@keyframes flash-red {
+  0% { background-color: #9c0d0d; }
+  50% { background-color: rgba(255, 255, 255, 0.2); }
+  100% { background-color: #9c0d0d; }
+}
+
+.answer-btn.incorrect {
+  animation: flash-red 0.5s 3; /* Blitzt dreimal rot */
+  background-color: #9c0d0d !important;
+}
+
+/* Korrekte Antwort: Grün */
+.answer-btn.correct {
+  background-color: #1a8b1a;
+  pointer-events: none; /* Nach richtiger Antwort nicht mehr klickbar */
 }
 
 /* Seitenanzeige unten */
