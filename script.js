@@ -8,7 +8,9 @@ pageIndicator.id = "page-indicator";
 document.body.appendChild(pageIndicator);
 
 function showSlide(index) {
-  const offset = -index * window.innerWidth; // Snap auf volle Breite
+  // Berechne Offset so, dass die Box immer zentriert ist
+  const giftWidth = gifts[0].offsetWidth;
+  const offset = -index * window.innerWidth + (window.innerWidth - giftWidth) / 2;
   track.style.transform = `translateX(${offset}px)`;
   updatePageIndicator(index);
 }
@@ -17,7 +19,7 @@ function updatePageIndicator(index) {
   pageIndicator.textContent = `${index + 1} / ${gifts.length}`;
 }
 
-// Pfeiltasten (nur innerhalb Bereich)
+// Pfeiltasten
 document.addEventListener("keydown", e => {
   if (e.key === "ArrowRight" && currentIndex < gifts.length - 1) {
     currentIndex++;
@@ -29,7 +31,7 @@ document.addEventListener("keydown", e => {
   }
 });
 
-// Touch Swipe fürs Handy (nur innerhalb Bereich)
+// Touch Swipe fürs Handy
 let startX = 0;
 track.addEventListener("touchstart", e => startX = e.touches[0].clientX);
 track.addEventListener("touchend", e => {
@@ -43,7 +45,7 @@ track.addEventListener("touchend", e => {
   }
 });
 
-// Klick Event (Unlock / Frage)
+// Klick Event
 gifts.forEach(gift => {
   gift.addEventListener("click", () => {
     alert("Hier kommt später die Frage oder das Unlock-Game!");
